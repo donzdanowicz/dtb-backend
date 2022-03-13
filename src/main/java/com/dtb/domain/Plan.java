@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.Month;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @Entity
-@Table(name="ENTRIES")
-public class Entry {
+@Table(name="PLANS")
+public class Plan {
 
     @Id
     @GeneratedValue
@@ -24,16 +24,12 @@ public class Entry {
     private Long id;
 
     @NotNull
-    @Column(name="NAME")
-    private String name;
-
-    @NotNull
     @Column(name="VALUE")
     private double value;
 
     @NotNull
-    @Column(name="CREATED")
-    private LocalDateTime created;
+    @Column(name="MONTH")
+    private Month month;
 
     @ManyToOne
     @JoinColumn(name="SUBCATEGORY_ID")
