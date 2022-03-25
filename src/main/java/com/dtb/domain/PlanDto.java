@@ -15,5 +15,6 @@ public class PlanDto {
     private Long id;
     private double value;
     private Month month;
-    private Long subcategoryId;
+    private String categoryName;
+    private Long userId;
 }

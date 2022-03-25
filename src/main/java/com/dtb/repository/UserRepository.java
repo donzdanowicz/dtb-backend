@@ -1,6 +1,6 @@
 package com.dtb.repository;
 
-import com.dtb.domain.Subcategory;
+import com.dtb.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,16 +10,16 @@ import java.util.Optional;
 
 @Transactional
 @Repository
-public interface SubcategoryRepository extends CrudRepository<Subcategory, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
     @Override
-    List<Subcategory> findAll();
+    List<User> findAll();
 
     @Override
-    Subcategory save(Subcategory subcategory);
+    User save(User user);
 
     @Override
     void deleteById(Long id);
 
     @Override
-    Optional<Subcategory> findById(Long id);
+    Optional<User> findById(Long id);
 }

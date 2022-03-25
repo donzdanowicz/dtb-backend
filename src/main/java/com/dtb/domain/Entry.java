@@ -36,6 +36,10 @@ public class Entry {
     private LocalDateTime created;
 
     @ManyToOne
-    @JoinColumn(name="SUBCATEGORY_ID")
-    private Subcategory subcategory;
+    @JoinColumn(name="CATEGORY_NAME")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name="USER_ID")
+    private User user;
 }

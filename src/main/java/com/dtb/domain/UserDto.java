@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class EntryDto {
+public class UserDto {
     private Long id;
-    private String name;
-    private double value;
+    private String firstName;
+    private String lastName;
     private LocalDateTime created;
-    private String categoryName;
-    private Long userId;
+    private String currency;
+    private DefaultCategoriesComplexity complexity;
 }

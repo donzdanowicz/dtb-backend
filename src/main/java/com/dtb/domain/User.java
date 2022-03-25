@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -13,8 +14,8 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name="CATEGORIES")
-public class Category {
+@Table(name="USERS")
+public class User {
 
     @Id
     @GeneratedValue
@@ -22,32 +23,38 @@ public class Category {
     @Column(name="ID", unique = true)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @SequenceGenerator(name="ordinal_number_generator", sequenceName = "category_ordinal_seq", initialValue = 1)
     @NotNull
-    @Column(name="ORDINAL_NUMBER", unique = true)
-    private int ordinalNumber;
+    @Column(name="FIRST_NAME")
+    private String firstName;
 
     @NotNull
-    @Column(name="NAME", unique = true)
-    private String name;
+    @Column(name="LAST_NAME")
+    private String lastName;
 
     @NotNull
-    @Column(name="TAG")
-    private String tag;
+    @Column(name="CREATED")
+    private LocalDateTime created; //= LocalDateTime.now();
+
+    @NotNull
+    @Column(name="CURRENCY")
+    private String currency;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name="TYPE")
-    private CategoryType type;
+    @Column(name="COMPLEXITY")
+    private DefaultCategoriesComplexity complexity;
 
-    @ManyToOne
-    @JoinColumn(name="USER_ID")
-    private User user;
+    @OneToMany(
+            targetEntity = Category.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Category> categories;
 
     @OneToMany(
             targetEntity = Entry.class,
-            mappedBy = "category",
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
@@ -55,9 +62,9 @@ public class Category {
 
     @OneToMany(
             targetEntity = Plan.class,
-            mappedBy = "category",
+            mappedBy = "user",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<Plan> plans;
 }

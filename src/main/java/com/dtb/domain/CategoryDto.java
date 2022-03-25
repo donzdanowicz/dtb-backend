@@ -13,4 +13,7 @@ public class CategoryDto {
     private Long id;
     private int ordinalNumber;
     private String name;
+    private String tag;
+    private CategoryType type;
+    private Long userId;
 }
