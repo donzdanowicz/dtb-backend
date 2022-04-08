@@ -9,6 +9,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Month;
 
+
+@NamedNativeQuery(
+        name = "Plan.reportPlans",
+        query = "SELECT ReportPlans()"
+)
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -31,9 +37,9 @@ public class Plan {
     @Column(name="MONTH")
     private Month month;
 
-    @ManyToOne
-    @JoinColumn(name="CATEGORY_NAME")
-    private Category category;
+    @NotNull
+    @Column(name="CATEGORY_ID")
+    private Long categoryId;
 
     @ManyToOne
     @JoinColumn(name="USER_ID")

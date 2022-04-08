@@ -53,11 +53,11 @@ public class Category {
     )
     private List<Entry> entries;
 
-    @OneToMany(
+    /*@OneToMany(
             targetEntity = Plan.class,
             mappedBy = "category",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    private List<Plan> plans;
+    private List<Plan> plans;*/
 }
