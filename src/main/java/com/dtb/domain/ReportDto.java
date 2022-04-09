@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class EntryDto {
+public class ReportDto {
     private Long id;
     private double income;
     private double food;
@@ -24,8 +23,8 @@ public class EntryDto {
     private double travel;
     private double debts;
     private double savingAndInvesting;
-    private String description;
     private EntryType type;
-    private LocalDate created;
+    private int month;
+    private int year;
     private Long userId;
 }

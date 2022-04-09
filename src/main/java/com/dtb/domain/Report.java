@@ -1,23 +1,25 @@
 package com.dtb.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @NamedNativeQuery(
-        name = "Entry.report",
-        query = "SELECT ID, CREATED, TYPE,\n" +
+        name = "Report.report",
+        query = "SELECT ID, MONTH(CREATED) AS MONTH, YEAR(CREATED) AS YEAR, TYPE,\n" +
                 "       SUM(INCOME) AS INCOME, SUM(FOOD) AS FOOD, SUM(HOUSING) AS HOUSING,\n" +
                 "       SUM(TRANSPORTATION) AS TRANSPORTATION, SUM(HEALTHCARE) AS HEALTHCARE, SUM(PERSONAL) AS PERSONAL,\n" +
                 "       SUM(KIDS) AS KIDS, SUM(ENTERTAINMENT) AS ENTERTAINMENT, SUM(MISCELLANEOUS) AS MISCELLANEOUS,\n" +
                 "       SUM(TRAVEL) AS TRAVEL, SUM(DEBTS) AS DEBTS, SUM(SAVING_AND_INVESTING) AS SAVING_AND_INVESTING,\n" +
-                "       DESCRIPTION, USER_ID\n" +
+                "       USER_ID\n" +
                 "FROM ENTRIES\n" +
                 "WHERE MONTH(created) = 4 AND YEAR(created) = 2021\n" +
                 "GROUP BY TYPE, MONTH(CREATED), YEAR(CREATED)\n" +
                 "ORDER BY CREATED, TYPE",
-        resultClass = Entry.class
+        resultClass = Report.class
 )
 
 @NoArgsConstructor
@@ -25,8 +27,8 @@ import java.time.LocalDate;
 @Data
 @Builder
 @Entity
-@Table(name="ENTRIES")
-public class Entry {
+@Table(name="REPORTS")
+public class Report {
 
     @Id
     @GeneratedValue
@@ -70,17 +72,18 @@ public class Entry {
     @Column(name="SAVING_AND_INVESTING")
     private double savingAndInvesting;
 
-    @Column(name="DESCRIPTION")
-    private String description;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name="TYPE")
     private EntryType type;
 
     @NotNull
-    @Column(name="CREATED")
-    private LocalDate created;
+    @Column(name="MONTH")
+    private int month;
+
+    @NotNull
+    @Column(name="YEAR")
+    private int year;
 
     @ManyToOne
     @JoinColumn(name="USER_ID")

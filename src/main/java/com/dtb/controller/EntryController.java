@@ -2,7 +2,6 @@ package com.dtb.controller;
 
 import com.dtb.domain.Entry;
 import com.dtb.domain.EntryDto;
-import com.dtb.exception.CategoryNotFoundException;
 import com.dtb.exception.EntryNotFoundException;
 import com.dtb.exception.UserNotFoundException;
 import com.dtb.mapper.EntryMapper;
@@ -16,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@RequestMapping("v1")
+@RequestMapping("/v1")
 public class EntryController {
     private final EntryDbService entryDbService;
     private final EntryMapper entryMapper;
@@ -34,21 +33,27 @@ public class EntryController {
         );
     }
 
-    @DeleteMapping(value = "entries/{id}")
+    @DeleteMapping(value = "/entries/{id}")
     public void deleteEntry(@PathVariable Long id) {
         entryDbService.deleteEntry(id);
     }
 
-    @PostMapping(value = "entries", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createEntry(@RequestBody EntryDto entryDto) throws UserNotFoundException, CategoryNotFoundException {
+    @PostMapping(value = "/entries", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createEntry(@RequestBody EntryDto entryDto) throws UserNotFoundException {
         Entry entry = entryMapper.mapToEntry(entryDto);
         entryDbService.saveEntry(entry);
     }
 
-    @PutMapping(value = "entries")
-    public EntryDto updateEntry(@RequestBody EntryDto entryDto) throws UserNotFoundException, CategoryNotFoundException {
+    @PutMapping(value = "/entries")
+    public EntryDto updateEntry(@RequestBody EntryDto entryDto) throws UserNotFoundException {
         Entry entry = entryMapper.mapToEntry(entryDto);
         Entry updatedEntry = entryDbService.saveEntry(entry);
         return entryMapper.mapToEntryDto(updatedEntry);
+    }
+
+    @GetMapping(value = "/entries/report")
+    public List<EntryDto> report() {
+        List<Entry> report = entryDbService.report();
+        return entryMapper.mapToEntryDtoList(report);
     }
 }

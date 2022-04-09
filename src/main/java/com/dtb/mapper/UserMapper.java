@@ -19,7 +19,6 @@ public class UserMapper {
                 .lastName(userDto.getLastName())
                 .created(userDto.getCreated())
                 .currency(userDto.getCurrency())
-                .complexity(userDto.getComplexity())
                 .build();
     }
 
@@ -30,7 +29,6 @@ public class UserMapper {
                 .lastName(user.getLastName())
                 .created(user.getCreated())
                 .currency(user.getCurrency())
-                .complexity(user.getComplexity())
                 .build();
     }
 

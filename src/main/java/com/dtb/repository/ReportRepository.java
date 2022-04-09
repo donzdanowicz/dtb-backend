@@ -1,9 +1,8 @@
 package com.dtb.repository;
 
-import com.dtb.domain.Plan;
+import com.dtb.domain.Report;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -12,19 +11,20 @@ import java.util.Optional;
 
 @Transactional
 @Repository
-public interface PlanRepository extends CrudRepository<Plan, Long> {
+public interface ReportRepository extends CrudRepository<Report, Long> {
+
+   /* @Override
+    List<Report> findAll();
 
     @Override
-    List<Plan> findAll();
-
-    @Override
-    Plan save(Plan plan);
+    Report save(Report report);
 
     @Override
     void deleteById(Long id);
 
     @Override
-    Optional<Plan> findById(Long id);
+    Optional<Report> findById(Long id);*/
 
-
+    @Query
+    List<Report> report();
 }

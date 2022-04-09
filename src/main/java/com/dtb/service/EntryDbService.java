@@ -28,4 +28,8 @@ public class EntryDbService {
     public void deleteEntry(final Long id) {
         entryRepository.deleteById(id);
     }
+
+    public List<Entry> report() {
+        return entryRepository.report();
+    }
 }

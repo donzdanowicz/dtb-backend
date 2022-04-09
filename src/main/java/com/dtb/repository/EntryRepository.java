@@ -1,6 +1,7 @@
 package com.dtb.repository;
 
 import com.dtb.domain.Entry;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,7 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
 
     @Override
     Optional<Entry> findById(Long id);
+
+    @Query(nativeQuery = true)
+    List<Entry> report();
 }

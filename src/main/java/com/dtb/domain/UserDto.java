@@ -17,5 +17,4 @@ public class UserDto {
     private String lastName;
     private LocalDateTime created;
     private String currency;
-    private DefaultCategoriesComplexity complexity;
 }

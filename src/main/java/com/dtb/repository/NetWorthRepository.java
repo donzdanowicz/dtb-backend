@@ -1,27 +1,24 @@
 package com.dtb.repository;
 
-import com.dtb.domain.Category;
+import com.dtb.domain.NetWorth;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
 @Repository
-public interface CategoryRepository extends CrudRepository<Category, Long> {
+public interface NetWorthRepository extends CrudRepository<NetWorth, Long> {
     @Override
-    List<Category> findAll();
+    List<NetWorth> findAll();
 
     @Override
-    Category save(Category category);
+    NetWorth save(NetWorth netWorth);
 
     @Override
     void deleteById(Long id);
 
     @Override
-    Optional<Category> findById(Long id);
-
-    Optional<Category> findByName(String categoryName);
+    Optional<NetWorth> findById(Long id);
 }

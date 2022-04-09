@@ -33,24 +33,11 @@ public class User {
 
     @NotNull
     @Column(name="CREATED")
-    private LocalDateTime created; //= LocalDateTime.now();
+    private LocalDateTime created = LocalDateTime.now();
 
     @NotNull
     @Column(name="CURRENCY")
     private String currency;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name="COMPLEXITY")
-    private DefaultCategoriesComplexity complexity;
-
-    @OneToMany(
-            targetEntity = Category.class,
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Category> categories;
 
     @OneToMany(
             targetEntity = Entry.class,
@@ -59,12 +46,4 @@ public class User {
             fetch = FetchType.LAZY
     )
     private List<Entry> entries;
-
-    @OneToMany(
-            targetEntity = Plan.class,
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Plan> plans;
 }
