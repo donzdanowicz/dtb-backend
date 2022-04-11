@@ -4,8 +4,6 @@ import com.dtb.domain.User;
 import com.dtb.domain.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,23 +11,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
     public User mapToUser(final UserDto userDto) {
-        return User.builder()
-                .id(userDto.getId())
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
-                .created(userDto.getCreated())
-                .currency(userDto.getCurrency())
-                .build();
+        return new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(),
+                userDto.getCreated(), userDto.getCurrency());
     }
 
     public UserDto mapToUserDto(final User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .created(user.getCreated())
-                .currency(user.getCurrency())
-                .build();
+        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
+                user.getCreated(), user.getCurrency());
     }
 
     public List<UserDto> mapToUserDtoList(final List<User> categories) {

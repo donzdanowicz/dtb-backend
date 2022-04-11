@@ -41,6 +41,9 @@ public class NetWorthController {
     @PostMapping(value = "/netWorth", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createNetWorthEntry(@RequestBody NetWorthDto netWorthDto) throws UserNotFoundException {
         NetWorth netWorth = netWorthMapper.mapToNetWorth(netWorthDto);
+        netWorth.setTotalAssets(netWorth.calculateTotalAssets());
+        netWorth.setTotalLiabilities(netWorth.calculateTotalLiabilities());
+        netWorth.setTotalNetWorth(netWorth.calculateTotalNetWorth());
         netWorthDbService.saveNetWorthEntry(netWorth);
     }
 

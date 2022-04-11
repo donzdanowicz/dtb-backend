@@ -53,7 +53,10 @@ public class EntryController {
 
     @GetMapping(value = "/entries/report")
     public List<EntryDto> report() {
-        List<Entry> report = entryDbService.report();
-        return entryMapper.mapToEntryDtoList(report);
+        List<Entry> reports = entryDbService.report();
+        for (Entry report : reports) {
+            report.setDay(1);
+        }
+        return entryMapper.mapToEntryDtoList(reports);
     }
 }

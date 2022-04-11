@@ -1,9 +1,7 @@
 package com.dtb.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -12,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 @Entity
 @Table(name="USERS")
 public class User {
@@ -39,11 +36,14 @@ public class User {
     @Column(name="CURRENCY")
     private String currency;
 
-    @OneToMany(
+    /*@OneToMany(
             targetEntity = Entry.class,
             mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<Entry> entries;
+
+    public User(Long id, String firstName, String lastName, LocalDateTime created, String currency) {
+    }*/
 }

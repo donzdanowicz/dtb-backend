@@ -15,7 +15,7 @@ public class EntryMapper {
     private UserRepository userRepository;
 
     public Entry mapToEntry(final EntryDto entryDto) throws UserNotFoundException {
-        return Entry.builder()
+        return new Entry.EntryBuilder()
                 .id(entryDto.getId())
                 .income(entryDto.getIncome())
                 .food(entryDto.getFood())
@@ -29,15 +29,16 @@ public class EntryMapper {
                 .travel(entryDto.getTravel())
                 .debts(entryDto.getDebts())
                 .savingAndInvesting(entryDto.getSavingAndInvesting())
-                .description(entryDto.getDescription())
                 .type(entryDto.getType())
-                .created(entryDto.getCreated())
+                .day(entryDto.getDay())
+                .month(entryDto.getMonth())
+                .year(entryDto.getYear())
                 .user(userRepository.findById(entryDto.getUserId()).orElseThrow(UserNotFoundException::new))
                 .build();
     }
 
     public EntryDto mapToEntryDto(final Entry entry) {
-        return EntryDto.builder()
+        return new EntryDto.EntryDtoBuilder()
                 .id(entry.getId())
                 .income(entry.getIncome())
                 .food(entry.getFood())
@@ -51,9 +52,10 @@ public class EntryMapper {
                 .travel(entry.getTravel())
                 .debts(entry.getDebts())
                 .savingAndInvesting(entry.getSavingAndInvesting())
-                .description(entry.getDescription())
                 .type(entry.getType())
-                .created(entry.getCreated())
+                .day(entry.getDay())
+                .month(entry.getMonth())
+                .year(entry.getYear())
                 .userId(entry.getUser().getId())
                 .build();
     }

@@ -3,27 +3,25 @@ package com.dtb.domain;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @NamedNativeQuery(
         name = "Entry.report",
-        query = "SELECT ID, CREATED, TYPE,\n" +
+        query = "SELECT ID, MONTH, YEAR, TYPE,\n" +
                 "       SUM(INCOME) AS INCOME, SUM(FOOD) AS FOOD, SUM(HOUSING) AS HOUSING,\n" +
                 "       SUM(TRANSPORTATION) AS TRANSPORTATION, SUM(HEALTHCARE) AS HEALTHCARE, SUM(PERSONAL) AS PERSONAL,\n" +
                 "       SUM(KIDS) AS KIDS, SUM(ENTERTAINMENT) AS ENTERTAINMENT, SUM(MISCELLANEOUS) AS MISCELLANEOUS,\n" +
                 "       SUM(TRAVEL) AS TRAVEL, SUM(DEBTS) AS DEBTS, SUM(SAVING_AND_INVESTING) AS SAVING_AND_INVESTING,\n" +
-                "       DESCRIPTION, USER_ID\n" +
+                "       DAY, USER_ID\n" +
                 "FROM ENTRIES\n" +
-                "WHERE MONTH(created) = 4 AND YEAR(created) = 2021\n" +
-                "GROUP BY TYPE, MONTH(CREATED), YEAR(CREATED)\n" +
-                "ORDER BY CREATED, TYPE",
+                //"WHERE MONTH(created) = 4 AND YEAR(created) = 2021\n" +
+                "GROUP BY TYPE, MONTH, YEAR\n" +
+                "ORDER BY YEAR, MONTH, TYPE",
         resultClass = Entry.class
 )
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 @Entity
 @Table(name="ENTRIES")
 public class Entry {
@@ -70,19 +68,164 @@ public class Entry {
     @Column(name="SAVING_AND_INVESTING")
     private double savingAndInvesting;
 
-    @Column(name="DESCRIPTION")
-    private String description;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name="TYPE")
     private EntryType type;
 
+    @Column(name="DAY")
+    private int day;
+
     @NotNull
-    @Column(name="CREATED")
-    private LocalDate created;
+    @Column(name="MONTH")
+    private int month;
+
+    @NotNull
+    @Column(name="YEAR")
+    private int year;
 
     @ManyToOne
     @JoinColumn(name="USER_ID")
     private User user;
+
+    private Entry (EntryBuilder builder) {
+        this.id = builder.id;
+        this.income = builder.income;
+        this.food = builder.food;
+        this.housing = builder.housing;
+        this.transportation = builder.transportation;
+        this.healthcare = builder.healthcare;
+        this.personal = builder.personal;
+        this.kids = builder.kids;
+        this.entertainment = builder.entertainment;
+        this.miscellaneous = builder.miscellaneous;
+        this.travel = builder.travel;
+        this.debts = builder.debts;
+        this.savingAndInvesting = builder.savingAndInvesting;
+        this.type = builder.type;
+        this.day = builder.day;
+        this.month = builder.month;
+        this.year = builder.year;
+        this.user = builder.user;
+    }
+
+    public static class EntryBuilder {
+        private Long id;
+        private double income;
+        private double food;
+        private double housing;
+        private double transportation;
+        private double healthcare;
+        private double personal;
+        private double kids;
+        private double entertainment;
+        private double miscellaneous;
+        private double travel;
+        private double debts;
+        private double savingAndInvesting;
+        private EntryType type;
+        private int day;
+        private int month;
+        private int year;
+        private User user;
+
+        public EntryBuilder() {
+
+        }
+
+        public EntryBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public EntryBuilder income(double income) {
+            this.income = income;
+            return this;
+        }
+
+        public EntryBuilder food(double food) {
+            this.food = food;
+            return this;
+        }
+
+        public EntryBuilder housing(double housing) {
+            this.housing = housing;
+            return this;
+        }
+
+        public EntryBuilder transportation(double transportation) {
+            this.transportation = transportation;
+            return this;
+        }
+
+        public EntryBuilder healthcare(double healthcare) {
+            this.healthcare = healthcare;
+            return this;
+        }
+
+        public EntryBuilder personal(double personal) {
+            this.personal = personal;
+            return this;
+        }
+
+        public EntryBuilder kids(double kids) {
+            this.kids = kids;
+            return this;
+        }
+
+        public EntryBuilder entertainment(double entertainment) {
+            this.entertainment = entertainment;
+            return this;
+        }
+
+        public EntryBuilder miscellaneous(double miscellaneous) {
+            this.miscellaneous = miscellaneous;
+            return this;
+        }
+
+        public EntryBuilder travel(double travel) {
+            this.travel = travel;
+            return this;
+        }
+
+        public EntryBuilder debts(double debts) {
+            this.debts = debts;
+            return this;
+        }
+
+        public EntryBuilder savingAndInvesting(double savingAndInvesting) {
+            this.savingAndInvesting = savingAndInvesting;
+            return this;
+        }
+
+        public EntryBuilder type(EntryType type) {
+            this.type = type;
+            return this;
+        }
+
+        public EntryBuilder day(int day) {
+            this.day = day;
+            return this;
+        }
+
+        public EntryBuilder month(int month) {
+            this.month = month;
+            return this;
+        }
+
+        public EntryBuilder year(int year) {
+            this.year = year;
+            return this;
+        }
+
+        public EntryBuilder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Entry build() {
+            return new Entry(this);
+        }
+
+    }
 }
