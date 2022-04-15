@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -22,8 +24,10 @@ public class NetWorthDto {
     private double loans;
     private double creditCards;
     private double otherLiabilities;
-    private int month;
-    private int year;
+    private double totalAssets;
+    private double totalLiabilities;
+    private double totalNetWorth;
+    private LocalDate date;
     private Long userId;
 
     private NetWorthDto (NetWorthDtoBuilder builder) {
@@ -41,8 +45,7 @@ public class NetWorthDto {
         this.loans = builder.loans;
         this.creditCards = builder.creditCards;
         this.otherLiabilities = builder.otherLiabilities;
-        this.month = builder.month;
-        this.year = builder.year;
+        this.date = builder.date;
         this.userId = builder.userId;
     }
 
@@ -61,8 +64,10 @@ public class NetWorthDto {
         private double loans;
         private double creditCards;
         private double otherLiabilities;
-        private int month;
-        private int year;
+        private LocalDate date;
+        private double totalAssets;
+        private double totalLiabilities;
+        private double totalNetWorth;
         private Long userId;
 
         public NetWorthDtoBuilder() {
@@ -139,13 +144,23 @@ public class NetWorthDto {
             return this;
         }
 
-        public NetWorthDtoBuilder month(int month) {
-            this.month = month;
+        public NetWorthDtoBuilder date(LocalDate date) {
+            this.date = date;
             return this;
         }
 
-        public NetWorthDtoBuilder year(int year) {
-            this.year = year;
+        public NetWorthDtoBuilder totalAssets(double totalAssets) {
+            this.totalAssets = totalAssets;
+            return this;
+        }
+
+        public NetWorthDtoBuilder totalLiabilities(double totalLiabilities) {
+            this.totalLiabilities = totalLiabilities;
+            return this;
+        }
+
+        public NetWorthDtoBuilder totalNetWorth(double totalNetWorth) {
+            this.totalNetWorth = totalNetWorth;
             return this;
         }
 
@@ -158,5 +173,18 @@ public class NetWorthDto {
             return new NetWorthDto(this);
         }
 
+    }
+
+    public double calculateTotalAssets() {
+        return getRealEstate() + getCash() + getVehicles() + getSavingsAndInvestments() + getForeignCurrencies()
+                + getStocks() + getCollections() + getHomeContent() + getOtherAssets();
+    }
+
+    public double calculateTotalLiabilities() {
+        return getMortgage() + getLoans() + getCreditCards() + getOtherLiabilities();
+    }
+
+    public double calculateTotalNetWorth() {
+        return getTotalAssets() - getTotalLiabilities();
     }
 }

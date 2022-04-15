@@ -3,21 +3,37 @@ package com.dtb.domain;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
-@NamedNativeQuery(
-        name = "Entry.report",
-        query = "SELECT ID, MONTH, YEAR, TYPE,\n" +
+@NamedNativeQueries({
+        @NamedNativeQuery(
+        name="Entry.report",
+        query = "SELECT ID, DATE, TYPE,\n" +
                 "       SUM(INCOME) AS INCOME, SUM(FOOD) AS FOOD, SUM(HOUSING) AS HOUSING,\n" +
                 "       SUM(TRANSPORTATION) AS TRANSPORTATION, SUM(HEALTHCARE) AS HEALTHCARE, SUM(PERSONAL) AS PERSONAL,\n" +
                 "       SUM(KIDS) AS KIDS, SUM(ENTERTAINMENT) AS ENTERTAINMENT, SUM(MISCELLANEOUS) AS MISCELLANEOUS,\n" +
                 "       SUM(TRAVEL) AS TRAVEL, SUM(DEBTS) AS DEBTS, SUM(SAVING_AND_INVESTING) AS SAVING_AND_INVESTING,\n" +
-                "       DAY, USER_ID\n" +
+                "       USER_ID\n" +
                 "FROM ENTRIES\n" +
                 //"WHERE MONTH(created) = 4 AND YEAR(created) = 2021\n" +
-                "GROUP BY TYPE, MONTH, YEAR\n" +
-                "ORDER BY YEAR, MONTH, TYPE",
+                "GROUP BY TYPE, MONTH(DATE), YEAR(DATE)\n" +
+                "ORDER BY YEAR(DATE), MONTH(DATE), TYPE",
         resultClass = Entry.class
-)
+        ),
+        @NamedNativeQuery(name="Entry.reportByDate",
+                query = "SELECT ID, DATE, TYPE,\n" +
+                        "       SUM(INCOME) AS INCOME, SUM(FOOD) AS FOOD, SUM(HOUSING) AS HOUSING,\n" +
+                        "       SUM(TRANSPORTATION) AS TRANSPORTATION, SUM(HEALTHCARE) AS HEALTHCARE, SUM(PERSONAL) AS PERSONAL,\n" +
+                        "       SUM(KIDS) AS KIDS, SUM(ENTERTAINMENT) AS ENTERTAINMENT, SUM(MISCELLANEOUS) AS MISCELLANEOUS,\n" +
+                        "       SUM(TRAVEL) AS TRAVEL, SUM(DEBTS) AS DEBTS, SUM(SAVING_AND_INVESTING) AS SAVING_AND_INVESTING,\n" +
+                        "       USER_ID\n" +
+                        "FROM ENTRIES\n" +
+                        "WHERE DATE BETWEEN :BEGIN AND :END\n" +
+                        "GROUP BY TYPE, MONTH(DATE), YEAR(DATE)\n" +
+                        "ORDER BY DATE, TYPE;",
+                resultClass = Entry.class
+        )
+        })
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -73,16 +89,9 @@ public class Entry {
     @Column(name="TYPE")
     private EntryType type;
 
-    @Column(name="DAY")
-    private int day;
-
     @NotNull
-    @Column(name="MONTH")
-    private int month;
-
-    @NotNull
-    @Column(name="YEAR")
-    private int year;
+    @Column(name="DATE")
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name="USER_ID")
@@ -103,9 +112,7 @@ public class Entry {
         this.debts = builder.debts;
         this.savingAndInvesting = builder.savingAndInvesting;
         this.type = builder.type;
-        this.day = builder.day;
-        this.month = builder.month;
-        this.year = builder.year;
+        this.date = builder.date;
         this.user = builder.user;
     }
 
@@ -124,9 +131,7 @@ public class Entry {
         private double debts;
         private double savingAndInvesting;
         private EntryType type;
-        private int day;
-        private int month;
-        private int year;
+        private LocalDate date;
         private User user;
 
         public EntryBuilder() {
@@ -203,18 +208,8 @@ public class Entry {
             return this;
         }
 
-        public EntryBuilder day(int day) {
-            this.day = day;
-            return this;
-        }
-
-        public EntryBuilder month(int month) {
-            this.month = month;
-            return this;
-        }
-
-        public EntryBuilder year(int year) {
-            this.year = year;
+        public EntryBuilder date(LocalDate date) {
+            this.date = date;
             return this;
         }
 

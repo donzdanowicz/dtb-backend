@@ -30,9 +30,7 @@ public class EntryMapper {
                 .debts(entryDto.getDebts())
                 .savingAndInvesting(entryDto.getSavingAndInvesting())
                 .type(entryDto.getType())
-                .day(entryDto.getDay())
-                .month(entryDto.getMonth())
-                .year(entryDto.getYear())
+                .date(entryDto.getDate())
                 .user(userRepository.findById(entryDto.getUserId()).orElseThrow(UserNotFoundException::new))
                 .build();
     }
@@ -53,9 +51,7 @@ public class EntryMapper {
                 .debts(entry.getDebts())
                 .savingAndInvesting(entry.getSavingAndInvesting())
                 .type(entry.getType())
-                .day(entry.getDay())
-                .month(entry.getMonth())
-                .year(entry.getYear())
+                .date(entry.getDate())
                 .userId(entry.getUser().getId())
                 .build();
     }

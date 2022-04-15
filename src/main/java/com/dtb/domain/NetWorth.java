@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -59,22 +60,15 @@ public class NetWorth {
     private double otherLiabilities;
 
     @NotNull
-    @Column(name="MONTH")
-    private int month;
+    @Column(name="DATE")
+    private LocalDate date;
 
-    @NotNull
-    @Column(name="YEAR")
-    private int year;
-
-    @NotNull
     @Column(name="TOTAL_ASSETS")
     private double totalAssets;
 
-    @NotNull
     @Column(name="TOTAL_LIABILITIES")
     private double totalLiabilities;
 
-    @NotNull
     @Column(name="TOTAL_NET_WORTH")
     private double totalNetWorth;
 
@@ -97,8 +91,10 @@ public class NetWorth {
         this.loans = builder.loans;
         this.creditCards = builder.creditCards;
         this.otherLiabilities = builder.otherLiabilities;
-        this.month = builder.month;
-        this.year = builder.year;
+        this.date = builder.date;
+        this.totalAssets = builder.totalAssets;
+        this.totalLiabilities = builder.totalLiabilities;
+        this.totalNetWorth = builder.totalNetWorth;
         this.user = builder.user;
     }
 
@@ -117,8 +113,10 @@ public class NetWorth {
         private double loans;
         private double creditCards;
         private double otherLiabilities;
-        private int month;
-        private int year;
+        private LocalDate date;
+        private double totalAssets;
+        private double totalLiabilities;
+        private double totalNetWorth;
         private User user;
 
         public NetWorthBuilder() {
@@ -195,15 +193,26 @@ public class NetWorth {
             return this;
         }
 
-        public NetWorthBuilder month(int month) {
-            this.month = month;
+        public NetWorthBuilder date(LocalDate date) {
+            this.date = date;
             return this;
         }
 
-        public NetWorthBuilder year(int year) {
-            this.year = year;
+        public NetWorthBuilder totalAssets(double totalAssets) {
+            this.totalAssets = totalAssets;
             return this;
         }
+
+        public NetWorthBuilder totalLiabilities(double totalLiabilities) {
+            this.totalLiabilities = totalLiabilities;
+            return this;
+        }
+
+        public NetWorthBuilder totalNetWorth(double totalNetWorth) {
+            this.totalNetWorth = totalNetWorth;
+            return this;
+        }
+
 
         public NetWorthBuilder user(User user) {
             this.user = user;

@@ -1,9 +1,10 @@
 package com.dtb.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,9 +24,7 @@ public class EntryDto {
     private double debts;
     private double savingAndInvesting;
     private EntryType type;
-    private int day;
-    private int month;
-    private int year;
+    private LocalDate date;
     private Long userId;
 
     private EntryDto (EntryDtoBuilder builder) {
@@ -43,9 +42,7 @@ public class EntryDto {
         this.debts = builder.debts;
         this.savingAndInvesting = builder.savingAndInvesting;
         this.type = builder.type;
-        this.day = builder.day;
-        this.month = builder.month;
-        this.year = builder.year;
+        this.date = builder.date;
         this.userId = builder.userId;
     }
 
@@ -64,9 +61,7 @@ public class EntryDto {
         private double debts;
         private double savingAndInvesting;
         private EntryType type;
-        private int day;
-        private int month;
-        private int year;
+        private LocalDate date;
         private Long userId;
 
         public EntryDtoBuilder() {
@@ -143,18 +138,8 @@ public class EntryDto {
             return this;
         }
 
-        public EntryDtoBuilder day(int day) {
-            this.day = day;
-            return this;
-        }
-
-        public EntryDtoBuilder month(int month) {
-            this.month = month;
-            return this;
-        }
-
-        public EntryDtoBuilder year(int year) {
-            this.year = year;
+        public EntryDtoBuilder date(LocalDate date) {
+            this.date = date;
             return this;
         }
 

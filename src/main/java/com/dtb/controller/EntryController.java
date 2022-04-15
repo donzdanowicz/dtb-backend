@@ -7,9 +7,11 @@ import com.dtb.exception.UserNotFoundException;
 import com.dtb.mapper.EntryMapper;
 import com.dtb.service.EntryDbService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -54,9 +56,13 @@ public class EntryController {
     @GetMapping(value = "/entries/report")
     public List<EntryDto> report() {
         List<Entry> reports = entryDbService.report();
-        for (Entry report : reports) {
-            report.setDay(1);
-        }
+        return entryMapper.mapToEntryDtoList(reports);
+    }
+
+    @GetMapping(value = "/entries/reportByDate")
+    public List<EntryDto> report(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate begin,
+                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        List<Entry> reports = entryDbService.reportByDate(begin, end);
         return entryMapper.mapToEntryDtoList(reports);
     }
 }

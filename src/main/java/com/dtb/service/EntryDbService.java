@@ -3,8 +3,10 @@ package com.dtb.service;
 import com.dtb.domain.Entry;
 import com.dtb.repository.EntryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +33,9 @@ public class EntryDbService {
 
     public List<Entry> report() {
         return entryRepository.report();
+    }
+
+    public List<Entry> reportByDate(@Param("BEGIN") LocalDate begin, @Param("END") LocalDate end) {
+        return entryRepository.reportByDate(begin, end);
     }
 }

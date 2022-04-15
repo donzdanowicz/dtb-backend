@@ -28,9 +28,8 @@ public class NetWorthController {
 
     @GetMapping(value = "/netWorth/{id}")
     public NetWorthDto getNetWorthEntry(@PathVariable Long id) throws NetWorthNotFoundException {
-        return netWorthMapper.mapToNetWorthDto(
-                netWorthDbService.getNetWorthEntry(id).orElseThrow(NetWorthNotFoundException::new)
-        );
+        NetWorth netWorth = netWorthDbService.getNetWorthEntry(id).orElseThrow(NetWorthNotFoundException::new);
+        return netWorthMapper.mapToNetWorthDto(netWorth);
     }
 
     @DeleteMapping(value = "/netWorth/{id}")

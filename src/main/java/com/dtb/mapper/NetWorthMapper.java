@@ -15,7 +15,7 @@ public class NetWorthMapper {
     private UserRepository userRepository;
 
     public NetWorth mapToNetWorth(final NetWorthDto netWorthDto) throws UserNotFoundException {
-        return new NetWorth.NetWorthBuilder()
+        NetWorth netWorth = new NetWorth.NetWorthBuilder()
                 .id(netWorthDto.getId())
                 .realEstate(netWorthDto.getRealEstate())
                 .cash(netWorthDto.getCash())
@@ -30,14 +30,22 @@ public class NetWorthMapper {
                 .loans(netWorthDto.getLoans())
                 .creditCards(netWorthDto.getCreditCards())
                 .otherLiabilities(netWorthDto.getOtherLiabilities())
-                .month(netWorthDto.getMonth())
-                .year(netWorthDto.getYear())
+                .date(netWorthDto.getDate())
+//                .totalAssets(netWorthDto.calculateTotalAssets())
+//                .totalLiabilities(netWorthDto.calculateTotalLiabilities())
+//                .totalNetWorth(netWorthDto.calculateTotalNetWorth())
                 .user(userRepository.findById(netWorthDto.getUserId()).orElseThrow(UserNotFoundException::new))
                 .build();
+
+        netWorth.setTotalAssets(netWorth.calculateTotalAssets());
+        netWorth.setTotalLiabilities(netWorth.calculateTotalLiabilities());
+        netWorth.setTotalNetWorth(netWorth.calculateTotalNetWorth());
+
+        return netWorth;
     }
 
     public NetWorthDto mapToNetWorthDto(final NetWorth netWorth) {
-        return new NetWorthDto.NetWorthDtoBuilder()
+        NetWorthDto netWorthDto = new NetWorthDto.NetWorthDtoBuilder()
                 .id(netWorth.getId())
                 .realEstate(netWorth.getRealEstate())
                 .cash(netWorth.getCash())
@@ -52,10 +60,15 @@ public class NetWorthMapper {
                 .loans(netWorth.getLoans())
                 .creditCards(netWorth.getCreditCards())
                 .otherLiabilities(netWorth.getOtherLiabilities())
-                .month(netWorth.getMonth())
-                .year(netWorth.getYear())
+                .date(netWorth.getDate())
                 .userId(netWorth.getUser().getId())
                 .build();
+
+        netWorthDto.setTotalAssets(netWorthDto.calculateTotalAssets());
+        netWorthDto.setTotalLiabilities(netWorthDto.calculateTotalLiabilities());
+        netWorthDto.setTotalNetWorth(netWorthDto.calculateTotalNetWorth());
+
+        return netWorthDto;
     }
 
     public List<NetWorthDto> mapToNetWorthDtoList(final List<NetWorth> netWorthList) {
