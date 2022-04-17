@@ -1,6 +1,8 @@
 package com.dtb.client;
 
+import com.dtb.domain.PriceDto;
 import com.dtb.domain.StockMarketDto;
+import com.dtb.domain.StockPriceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -24,16 +26,15 @@ public class StockMarketClient {
     @Value("${currencies.api.key}")
     private String stockMarketApiKey;
 
-    public ResponseEntity<StockMarketDto> getPriceOfStock(String symbol) {
+    public StockPriceDto getPriceOfStock(String symbol) {
         URI url = UriComponentsBuilder.fromHttpUrl(stockMarketApiEndpoint)
-                .queryParam("function", "GLOBAL_QUOTE")
-                .queryParam("symbol", symbol)
+                .queryParam("ticker_symbol", symbol)
                 .build()
                 .encode()
                 .toUri();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-RapidAPI-Host", "alpha-vantage.p.rapidapi.com");
+        headers.set("X-RapidAPI-Host", "stock-market-data.p.rapidapi.com");
         headers.set("X-RapidAPI-Key", stockMarketApiKey);
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
@@ -41,6 +42,15 @@ public class StockMarketClient {
         ResponseEntity<StockMarketDto> response = restTemplate.exchange(
                 url, HttpMethod.GET, requestEntity, StockMarketDto.class);
 
-        return response;
+        PriceDto priceDto = response.getBody().getPriceDto();
+        StockPriceDto stockPriceDto = StockPriceDto.builder()
+                .shortName(priceDto.getShortName())
+                .currency(priceDto.getCurrency())
+                .exchangeName(priceDto.getExchangeName())
+                .symbol(priceDto.getSymbol())
+                .price(priceDto.getRegularMarketPriceDto().getRaw())
+                .build();
+
+        return stockPriceDto;
     }
 }

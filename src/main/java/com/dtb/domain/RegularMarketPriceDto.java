@@ -15,6 +15,4 @@ import lombok.NoArgsConstructor;
 public class RegularMarketPriceDto {
     @JsonProperty("raw")
     private double raw;
-    @JsonProperty("fmt")
-    private String fmt;
 }

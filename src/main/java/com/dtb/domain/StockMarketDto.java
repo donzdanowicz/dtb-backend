@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StockMarketDto {
-    @JsonProperty("Global Quote")
-    private GlobalQuoteDto globalQuoteDto;
+    @JsonProperty("price")
+    private PriceDto PriceDto;
 }
