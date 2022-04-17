@@ -4,6 +4,8 @@ import com.dtb.domain.NetWorth;
 import com.dtb.repository.NetWorthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,5 +28,9 @@ public class NetWorthDbService {
 
     public void deleteNetWorthEntry(final Long id) {
         netWorthRepository.deleteById(id);
+    }
+
+    public List<NetWorth> getNetWorthReportByDateBetween(LocalDate begin, LocalDate end) {
+        return netWorthRepository.getNetWorthsByDateBetween(begin, end);
     }
 }

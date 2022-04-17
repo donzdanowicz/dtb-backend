@@ -4,6 +4,7 @@ import com.dtb.domain.NetWorth;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,6 @@ public interface NetWorthRepository extends CrudRepository<NetWorth, Long> {
 
     @Override
     Optional<NetWorth> findById(Long id);
+
+    List<NetWorth> getNetWorthsByDateBetween(LocalDate begin, LocalDate end);
 }

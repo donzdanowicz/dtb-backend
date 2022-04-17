@@ -1,6 +1,7 @@
 package com.dtb.service;
 
 import com.dtb.domain.Entry;
+import com.dtb.domain.EntryType;
 import com.dtb.repository.EntryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -31,6 +32,14 @@ public class EntryDbService {
         entryRepository.deleteById(id);
     }
 
+    public List<Entry> getEntriesByType(EntryType type) {
+        return entryRepository.getEntriesByType(type);
+    }
+
+    public List<Entry> getEntriesByDateBetween(LocalDate begin, LocalDate end) {
+        return entryRepository.getEntriesByDateBetween(begin, end);
+    }
+
     public List<Entry> report() {
         return entryRepository.report();
     }
@@ -38,4 +47,6 @@ public class EntryDbService {
     public List<Entry> reportByDate(@Param("BEGIN") LocalDate begin, @Param("END") LocalDate end) {
         return entryRepository.reportByDate(begin, end);
     }
+
+
 }
