@@ -2,7 +2,9 @@ package com.dtb.client;
 
 import com.dtb.domain.PriceDto;
 import com.dtb.domain.StockMarketDto;
+import com.dtb.domain.StockPriceAud;
 import com.dtb.domain.StockPriceDto;
+import com.dtb.service.StockPriceAudDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor

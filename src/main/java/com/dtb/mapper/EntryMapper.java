@@ -15,7 +15,7 @@ public class EntryMapper {
     private UserRepository userRepository;
 
     public Entry mapToEntry(final EntryDto entryDto) throws UserNotFoundException {
-        return new Entry.EntryBuilder()
+        return Entry.builder()
                 .id(entryDto.getId())
                 .income(entryDto.getIncome())
                 .food(entryDto.getFood())
@@ -36,7 +36,7 @@ public class EntryMapper {
     }
 
     public EntryDto mapToEntryDto(final Entry entry) {
-        return new EntryDto.EntryDtoBuilder()
+        return EntryDto.builder()
                 .id(entry.getId())
                 .income(entry.getIncome())
                 .food(entry.getFood())

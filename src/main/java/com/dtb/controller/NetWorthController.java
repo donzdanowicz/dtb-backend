@@ -39,7 +39,7 @@ public class NetWorthController {
     }
 
     @DeleteMapping(value = "/netWorth/{id}")
-    public void deleteNetWorthEntry(@PathVariable Long id) {
+    public void deleteNetWorthEntry(@PathVariable Long id) throws NetWorthNotFoundException {
 //        netWorthDbService.deleteNetWorthEntry(id);
         netWorthFacade.deleteNetWorthEntry(id);
     }
@@ -55,7 +55,8 @@ public class NetWorthController {
     }
 
     @PutMapping(value = "/netWorth")
-    public NetWorthDto updateNetWorthEntry(@RequestBody NetWorthDto netWorthDto) throws UserNotFoundException {
+    public NetWorthDto updateNetWorthEntry(@RequestBody NetWorthDto netWorthDto)
+            throws UserNotFoundException, NetWorthNotFoundException {
 //        NetWorth netWorth = netWorthMapper.mapToNetWorth(netWorthDto);
 //        NetWorth updatedNetWorth= netWorthDbService.saveNetWorthEntry(netWorth);
 //        return netWorthMapper.mapToNetWorthDto(updatedNetWorth);

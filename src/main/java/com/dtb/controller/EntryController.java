@@ -1,12 +1,15 @@
 package com.dtb.controller;
 
 import com.dtb.domain.Entry;
+import com.dtb.domain.EntryAud;
 import com.dtb.domain.EntryDto;
 import com.dtb.domain.EntryType;
 import com.dtb.exception.EntryNotFoundException;
 import com.dtb.exception.UserNotFoundException;
 import com.dtb.facade.EntryFacade;
 import com.dtb.mapper.EntryMapper;
+import com.dtb.repository.EntryAudRepository;
+import com.dtb.service.EntryAudDbService;
 import com.dtb.service.EntryDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,7 +44,7 @@ public class EntryController {
     }
 
     @DeleteMapping(value = "/entries/{id}")
-    public void deleteEntry(@PathVariable Long id) {
+    public void deleteEntry(@PathVariable Long id) throws EntryNotFoundException {
 //        entryDbService.deleteEntry(id);
         entryFacade.deleteEntry(id);
     }
@@ -51,11 +54,10 @@ public class EntryController {
 //        Entry entry = entryMapper.mapToEntry(entryDto);
 //        entryDbService.saveEntry(entry);
         entryFacade.createEntry(entryDto);
-
     }
 
     @PutMapping(value = "/entries")
-    public EntryDto updateEntry(@RequestBody EntryDto entryDto) throws UserNotFoundException {
+    public EntryDto updateEntry(@RequestBody EntryDto entryDto) throws UserNotFoundException, EntryNotFoundException {
 //        Entry entry = entryMapper.mapToEntry(entryDto);
 //        Entry updatedEntry = entryDbService.saveEntry(entry);
 //        return entryMapper.mapToEntryDto(updatedEntry);

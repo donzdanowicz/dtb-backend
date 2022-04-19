@@ -15,7 +15,7 @@ public class NetWorthMapper {
     private UserRepository userRepository;
 
     public NetWorth mapToNetWorth(final NetWorthDto netWorthDto) throws UserNotFoundException {
-        NetWorth netWorth = new NetWorth.NetWorthBuilder()
+        NetWorth netWorth = NetWorth.builder()
                 .id(netWorthDto.getId())
                 .realEstate(netWorthDto.getRealEstate())
                 .cash(netWorthDto.getCash())
@@ -45,7 +45,7 @@ public class NetWorthMapper {
     }
 
     public NetWorthDto mapToNetWorthDto(final NetWorth netWorth) {
-        NetWorthDto netWorthDto = new NetWorthDto.NetWorthDtoBuilder()
+        NetWorthDto netWorthDto =NetWorthDto.builder()
                 .id(netWorth.getId())
                 .realEstate(netWorth.getRealEstate())
                 .cash(netWorth.getCash())

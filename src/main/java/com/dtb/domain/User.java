@@ -30,7 +30,7 @@ public class User {
 
     @NotNull
     @Column(name="CREATED")
-    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created;
 
     @NotNull
     @Column(name="CURRENCY")
