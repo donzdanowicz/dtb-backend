@@ -36,14 +36,7 @@ public class User {
     @Column(name="CURRENCY")
     private String currency;
 
-    /*@OneToMany(
-            targetEntity = Entry.class,
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Entry> entries;
-
-    public User(Long id, String firstName, String lastName, LocalDateTime created, String currency) {
-    }*/
+    @NotNull
+    @Column(name="ACTIVE")
+    private boolean active;
 }

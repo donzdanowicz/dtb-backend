@@ -59,4 +59,10 @@ public class UserAud {
 
     @Column(name="NEW_CURRENCY")
     private String newCurrency;
+
+    @Column(name="OLD_ACTIVE")
+    private boolean oldActive;
+
+    @Column(name="NEW_ACTIVE")
+    private boolean newActive;
 }

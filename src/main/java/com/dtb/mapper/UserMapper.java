@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 public class UserMapper {
     public User mapToUser(final UserDto userDto) {
         return new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(),
-                userDto.getCreated(), userDto.getCurrency());
+                userDto.getCreated(), userDto.getCurrency(), userDto.isActive());
     }
 
     public UserDto mapToUserDto(final User user) {
         return new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
-                user.getCreated(), user.getCurrency());
+                user.getCreated(), user.getCurrency(), user.isActive());
     }
 
-    public List<UserDto> mapToUserDtoList(final List<User> categories) {
-        return categories.stream()
+    public List<UserDto> mapToUserDtoList(final List<User> users) {
+        return users.stream()
                 .map(this::mapToUserDto)
                 .collect(Collectors.toList());
     }

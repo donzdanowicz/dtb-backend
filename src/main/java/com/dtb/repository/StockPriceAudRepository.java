@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Repository
-public interface StockPriceRepository extends CrudRepository<StockPriceAud, Long> {
+public interface StockPriceAudRepository extends CrudRepository<StockPriceAud, Long> {
     @Override
     StockPriceAud save(StockPriceAud stockPriceAud);
 }

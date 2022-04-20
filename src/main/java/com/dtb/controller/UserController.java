@@ -57,4 +57,9 @@ public class UserController {
         return userFacade.updateUser(userDto);
     }
 
+    @PutMapping(value = "/users/setActive/")
+    public void setUserActive(@RequestParam Long id, @RequestParam boolean active) throws UserNotFoundException {
+        userFacade.setUserActive(id, active);
+    }
+
 }

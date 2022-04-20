@@ -35,17 +35,17 @@ public class CurrencyAud {
     @Column(name="CURRENCY_ID")
     private Long currencyId;
 
-    @Column(name="OLD_FROM")
-    private String oldFrom;
+    @Column(name="OLD_FROM_CURRENCY")
+    private String oldFromCurrency;
 
-    @Column(name="NEW_FROM")
-    private String newFrom;
+    @Column(name="NEW_FROM_CURRENCY")
+    private String newFromCurrency;
 
-    @Column(name="OLD_TO")
-    private String oldTo;
+    @Column(name="OLD_TO_CURRENCY")
+    private String oldToCurrency;
 
-    @Column(name="NEW_TO")
-    private String newTo;
+    @Column(name="NEW_TO_CURRENCY")
+    private String newToCurrency;
 
     @Column(name="OLD_RATE")
     private double oldRate;

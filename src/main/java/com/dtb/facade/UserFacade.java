@@ -57,6 +57,7 @@ public class UserFacade {
         //userDto.setCreated(LocalDateTime.now());
         User user = userMapper.mapToUser(userDto);
         user.setCreated(LocalDateTime.now());
+        user.setActive(false);
         userDbService.saveUser(user);
 
         UserAud userAud = UserAud.builder()
@@ -67,6 +68,7 @@ public class UserFacade {
                 .newLastName(userDto.getLastName())
                 .newCreated(userDto.getCreated())
                 .newCurrency(userDto.getCurrency())
+                .newActive(userDto.isActive())
                 .build();
 
         userAudDbService.saveUserAud(userAud);
@@ -83,10 +85,12 @@ public class UserFacade {
                 .newLastName(userDto.getLastName())
                 .newCreated(getUser(id).getCreated())
                 .newCurrency(userDto.getCurrency())
+                .newActive(userDto.isActive())
                 .oldFirstName(getUser(id).getFirstName())
                 .oldLastName(getUser(id).getLastName())
                 .oldCreated(getUser(id).getCreated())
                 .oldCurrency(getUser(id).getCurrency())
+                .oldActive(getUser(id).isActive())
                 .build();
 
         userAudDbService.saveUserAud(userAud);
@@ -95,6 +99,34 @@ public class UserFacade {
         if(user.getCreated() == null) user.setCreated(getUser(id).getCreated());
         User updatedUser = userDbService.saveUser(user);
         return userMapper.mapToUserDto(updatedUser);
+    }
+
+    public void setUserActive(final Long id, final boolean active) throws UserNotFoundException {
+
+        UserDto updatedUserDto = getUser(id);
+        updatedUserDto.setActive(active);
+
+        UserAud userAud = UserAud.builder()
+                .eventDate(LocalDate.now())
+                .eventType("UPDATE")
+                .userId(id)
+                .newFirstName(getUser(id).getFirstName())
+                .newLastName(getUser(id).getLastName())
+                .newCreated(getUser(id).getCreated())
+                .newCurrency(getUser(id).getCurrency())
+                .newActive(getUser(id).isActive())
+                .oldFirstName(getUser(id).getFirstName())
+                .oldLastName(getUser(id).getLastName())
+                .oldCreated(getUser(id).getCreated())
+                .oldCurrency(getUser(id).getCurrency())
+                .oldActive(getUser(id).isActive())
+                .build();
+
+        userAudDbService.saveUserAud(userAud);
+
+        User updatedUser = userMapper.mapToUser(updatedUserDto);
+        if(updatedUser.getCreated() == null) updatedUser.setCreated(getUser(id).getCreated());
+        userDbService.saveUser(updatedUser);
     }
 
 }
