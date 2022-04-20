@@ -10,12 +10,7 @@ import com.dtb.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,20 +46,6 @@ public class CurrencyController {
 
     @GetMapping(value = "/currencies/latest")
     public CurrencyDto getLatestCurrency(@RequestParam String from, @RequestParam String to) {
-//        List<CurrencyDto> currencies = currencyFacade.getCurrencies();
-//        LocalDateTime date = currencies.stream()
-//                .filter(f -> f.getFromCurrency().equals(from))
-//                .filter(t -> t.getToCurrency().equals(to))
-//                .map(CurrencyDto::getCreated)
-//                .max(LocalDateTime::compareTo)
-//                .stream().findAny().get();
-//
-//        Optional<CurrencyDto> latestCurrency = currencies.stream()
-//                .filter(c -> c.getCreated().equals(date))
-//                .findFirst();
-//
-//        return latestCurrency;
-
         return currencyFacade.getLatestCurrency(from, to).get();
     }
 
